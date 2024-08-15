@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+    .form-body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+      }
+      
+      .form-holder {
+        background: black;
+        border-radius: 10px;
+        max-width: 600px;
+        width: 100%;
+        padding: 30px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      }
+      
+      .form-content {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .form-items {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+      }
+      
+      .form-items label {
+        margin-bottom: 5px;
+      }
+      
+      .form-items input,
+      .form-items select {
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 4px;
+        font-size: 16px;
+        margin-bottom: 15px;
+        width: 100%;
+      }
+      
+      .form-items select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center/12px;
+      }
+      
+      .form-items input[type="date"]::-webkit-inner-spin-button {
+        display: none;
+      }
+      
+      .form-items button {
+        background: black;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 15px;
+      }
+      
+      .form-items a {
+        margin-top: 15px;
+        text-align: center;
+        color: red;
+      }
+      
+      @media only screen and (max-width: 600px) {
+        .form-holder {
+          padding: 20px;
+        }
+      }
+      .form-body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+      }
+      
+      .form-holder {
+        background: #fff;
+        border-radius: 10px;
+        max-width: 900px;
+        width: 100%;
+        padding: 100px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      }
+      
+      .form-content {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .form-items {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+      }
+      
+      .form-items label {
+        margin-bottom: 5px;
+      }
+      
+      .form-items input,
+      .form-items select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        margin-bottom: 15px;
+        width: 100%;
+      }
+      
+      .form-items select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center/12px;
+      }
+      
+      .form-items input[type="date"]::-webkit-inner-spin-button {
+        display: none;
+      }
+      
+      .form-items button {
+        background: red;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 15px;
+      }
+      
+      .form-items a {
+        margin-top: 15px;
+        text-align: center;
+        color: red;
+      }
+      
+      @media only screen and (max-width: 600px) {
+        .form-holder {
+          padding: 20px;
+        }
+      }
+            
+    </style>
+
+</head>
+<body>
+    
+<!-- form starts here -->
+<form method="POST" action="/createRecord" enctype="multipart/form-data", class="form-body">  
+        <div class="row">
+            <div class="form-holder"> 
+                <div class="form-content">
+                    <div class="form-items">
+                        <h3>{{action}}</h3>
+                        <div class="col-md-12">
+                            <div class="control">
+                                <br><strong><label for="type">Show Type</strong><br></label>
+                                <select id ="type" name="type">
+                                    {% for type in types %}  
+                                        {% if (type[0] == record.show_type) %}
+                                        <option value="{{ type[0] }}" selected>{{ type[0] }}</option>
+                                        {% else %}
+                                        <option value="{{ type[0] }}">{{ type[0] }}</option> 
+                                        {% endif %}
+                                    {% endfor %}
+                                       
+                                </select>
+                            </div>
+
+                            <strong><label>Enter Title</label></strong><br>
+                            <input class="form-control" type="text" name="title" placeholder="Enter Title" value = "{{record.title}}" required>
+                            <strong><label>Enter Director</label></strong><br>
+                            <input class="form-control" type="text" name="director" placeholder="Enter Director" value = "{{record_director}}" required>
+                            <strong><label>Enter Actors</label></strong><br>
+                            <input class="form-control" type="text" name="actor" placeholder="Enter Actors" value = "{{record_actor}}" required>
+                            <strong><label>Enter Country</label></strong><br>
+                            <input class="form-control" type="text" name="country" placeholder="Enter Country" value = "{{record_country}}" required>
+                            <strong><label>Select Date</label></strong><br>
+                            {% if action == 'Create Record' %}
+                            <input  placeholder="Select Date" type="text" onfocus="(this.type = 'date')"  name="date_added" class="form-control" id="date_added" max="2030-12-31"  required >
+                            <br><strong>Enter Release Year</strong><br>
+                            <input class="form-control" type="number" name="release_year" placeholder="Enter Release Year" required>
+                           {% endif %}
+                            <div class="control">
+                                <label for="rating"><strong>Rating</strong></label>
+                                <select id ="rating" name="rating">
+                                    <option value="select"></option>
+                                    {% for rating in ratings %}  
+                                        {% if (rating[0] == record.rating) %}
+                                        <option value="{{ rating[0] }}" selected>{{ rating[0] }}</option>
+                                        {% else %}
+                                        <option value="{{ rating[0] }}">{{ rating[0] }}</option> 
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <strong>Enter Duration</strong>
+                            <input class="form-control" type="text" name="duration" placeholder="Enter Duration" value="{{record.duration}}" required>
+                            <div class="control">
+                                <strong><label for="genre">Genre</label></strong><br>
+                                <select id ="genre" name="genre">
+                                    <option value="select"></option>
+                                    {% for genre in genres %}  
+                                        {% if (genre[0] == record_genre) %}
+                                        <option value="{{ genre[0] }}" selected>{{ genre[0] }}</option>
+                                        {% else %}
+                                        <option value="{{ genre[0] }}">{{ genre[0] }}</option> 
+                                        {% endif %}
+                                    {% endfor %} 
+                                </select>
+                            </div>
+                        <strong>Enter Duration</strong><br>
+                            <input class="form-control" type="text" name="description" placeholder="Enter Description" value="{{record.description}}" required>
+                            <br>
+                            <input hidden type="text" name="action" value="{{ action }}">
+                            <input hidden type="text" name ="show_id" value="{{ record.show_id}}">
+                            <button class="button is-block is-info is-large is-fullwidth">Submit</button>
+                            <a href="{{ url_for('netflixUtility.viewNetflix') }}">
+                                Back
+                            </a>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                </div>
+            </div>
+        </div>
+</form>
+</body>
+</html>
